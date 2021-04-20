@@ -29,3 +29,14 @@ $ docker volume ls
 $ docker volume rm [dbのvolume名]
 $ docker-compose up -d
 ```
+
+## gen/xo
+
+``` sh
+$ gen --connstr="root:password@tcp(localhost:3306)/devdb" --out generated --sqltype mysql --database devdb --no-json --overwrite
+```
+
+``` sh
+$ xo "mysql://root:password@localhost:3306/devdb" -o generated --verbose
+error # ファイルはgenerateされるがerrorと表示される
+```

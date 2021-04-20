@@ -2,52 +2,32 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/nansystem/mysql-test/generated"
 )
 
+var opts struct {
+	TargetDB string `short:"t" long:"targetdb" choice:"cvad" required:"true"`
+}
+
 func main() {
-	fmt.Println("Hello golang from new value")
+	// args, err := flags.Parse(&opts)
+	// if err != nil {
+	// 	os.Exit(1)
+	// }
 	db, err := sql.Open("mysql", "root:password@tcp(db:3306)/mysql")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT User from user")
-	if err != nil {
-		log.Fatal(err)
+	ad := &generated.Cv{
+		AdID:      1,
+		UserID:    2,
+		Status:    3,
+		CreatedAt: 4,
 	}
-
-	columns, err := rows.Columns() // カラム名を取得
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	values := make([]sql.RawBytes, len(columns))
-
-	scanArgs := make([]interface{}, len(values))
-	for i := range values {
-		scanArgs[i] = &values[i]
-	}
-
-	for rows.Next() {
-		err = rows.Scan(scanArgs...)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		var value string
-		for i, col := range values {
-			if col == nil {
-				value = "NULL"
-			} else {
-				value = string(col)
-			}
-			fmt.Println(columns[i], ": ", value)
-		}
-		fmt.Println("-----------------------------------")
-	}
+	ad.Insert(db)
 }
