@@ -19,3 +19,13 @@ $ docker-compose up -d
 $ docker-compose ps
 $ docker-compose logs
 ```
+
+### MYSQL_DATABASE変更時
+volumeがすでにある場合、MYSQL_DATABASEで指定したデータベースを生成しない。  
+そのためvolumeを削除してから再度起動する
+
+``` sh
+$ docker volume ls
+$ docker volume rm [dbのvolume名]
+$ docker-compose up -d
+```
