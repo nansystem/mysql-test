@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/bxcodec/faker/v3 v3.6.0 // indirect
+	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/guregu/null v4.0.0+incompatible
