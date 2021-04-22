@@ -40,3 +40,33 @@ $ gen --connstr="root:password@tcp(localhost:3306)/devdb" --out generated --sqlt
 $ xo "mysql://root:password@localhost:3306/devdb" -o generated --verbose
 error # ファイルはgenerateされるがerrorと表示される
 ```
+
+## file load
+```
+mysql> set persist local_infile=1;
+mysql> select @@local_infile;
++----------------+
+| @@local_infile |
++----------------+
+|              1 |
++----------------+
+1 row in set (0.01 sec)
+```
+
+``` mysql
+mysql --local-infile=1 -uroot -ppassword --protocol tcp
+load data local
+    infile '/home/nancy/git/mysql-test/app/clients.csv'
+into table
+    devdb.test_table
+fields
+    terminated by ',';
+```
+
+```
+CREATE TABLE IF NOT EXISTS `test_table` (
+    `client_id` INT(10) NOT NULL,
+    `client_name` VARCHAR(128) NOT NULL,
+    `client_age` INT(10) NOT NULL
+) ENGINE = InnoDB;
+```

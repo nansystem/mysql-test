@@ -3,10 +3,13 @@ module github.com/nansystem/mysql-test
 go 1.15
 
 require (
+	github.com/Masterminds/squirrel v1.5.0
 	github.com/bxcodec/faker/v3 v3.6.0 // indirect
+	github.com/cheggaaa/pb v1.0.29
 	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/gocarina/gocsv v0.0.0-20210408192840-02d7211d929d
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/iancoleman/strcase v0.1.3 // indirect
 	github.com/jessevdk/go-flags v1.5.0
