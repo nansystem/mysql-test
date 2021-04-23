@@ -20,7 +20,7 @@ func RandUnixTime(min, max time.Time) int64 {
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func RandomString(min, max int64) string {
-	b := make([]byte, rand.Int63n(max-min+1))
+	b := make([]byte, RandNum(min, max))
 
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]

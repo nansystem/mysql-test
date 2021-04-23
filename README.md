@@ -3,7 +3,7 @@
 ``` sh
 $ docker-compose build
 $ docker-compose up -d
-$ docker-compose exec app go run main.go
+$ docker-compose exec app go run cmd/cvad/main.go
 ```
 
 ### 作り直し
