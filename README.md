@@ -41,6 +41,12 @@ $ xo "mysql://root:password@localhost:3306/devdb" -o generated --verbose
 error # ファイルはgenerateされるがerrorと表示される
 ```
 
+## tbls
+
+``` sh
+$ docker run --rm -v $PWD:/work k1low/tbls doc mysql://root:password@tcp\(localhost\)/devdb
+```
+
 ## file load
 ```
 mysql> set persist local_infile=1;
@@ -53,7 +59,7 @@ mysql> select @@local_infile;
 1 row in set (0.01 sec)
 ```
 
-``` mysql
+``` sh
 mysql --local-infile=1 -uroot -ppassword --protocol tcp
 load data local
     infile '/home/nancy/git/mysql-test/app/clients.csv'
@@ -63,7 +69,7 @@ fields
     terminated by ',';
 ```
 
-```
+``` sql
 CREATE TABLE IF NOT EXISTS `test_table` (
     `client_id` INT(10) NOT NULL,
     `client_name` VARCHAR(128) NOT NULL,
