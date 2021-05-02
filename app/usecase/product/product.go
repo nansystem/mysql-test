@@ -38,14 +38,14 @@ func FillProducts(count int64) ([]generated.Product, error) {
 
 func createMockProducts(count int64) []generated.Product {
 	baseMin := time.Date(2018, 5, 1, 0, 0, 0, 0, common.JP())
-	baseMax := time.Date(2024, 5, 1, 0, 0, 0, 0, common.JP())
+	baseMax := time.Date(2022, 5, 1, 0, 0, 0, 0, common.JP())
 
 	list := make([]generated.Product, count)
 	for i := int64(0); i < count; i++ {
-		p := common.RandPeriod(baseMin, baseMax, 1, 120)
+		p := common.RandPeriod(baseMin, baseMax, 1, 180)
 		list[i] = newMockProduct(
 			uint(i+1),
-			uint(common.RandNum(1, 100000)),
+			uint(common.RandNum(1, 1000)),
 			common.RandomString(10, 30),
 			uint(common.RandNum(5000, 100000)),
 			p.Start,

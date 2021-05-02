@@ -26,9 +26,9 @@ type Period struct {
 	End   time.Time
 }
 
-func RandPeriod(min time.Time, max time.Time, addMinDay, addMaxDay int64) Period {
+func RandPeriod(baseMin time.Time, baseMax time.Time, addMinDay, addMaxDay int64) Period {
 	addDay := RandNum(addMinDay, addMaxDay)
-	start := RandTime(min, max)
+	start := RandTime(baseMin, baseMax)
 	end := start.AddDate(0, 0, int(addDay))
 	return Period{start, end}
 }

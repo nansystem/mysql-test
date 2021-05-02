@@ -45,7 +45,7 @@ ALTER TABLE cv ADD INDEX idx_status_created_at (status, created_at);
 ALTER TABLE cv DROP INDEX idx_status_created_at;
 ```
 
-## 複雑なSQL
+## 一週間前からカウントして、コンバージョン数が多い順に ad テーブルのレコードを並べる
 
 一週間前からカウントして、コンバージョン数が多い順に ad テーブルのレコードを並べたい場合のクエリについて見ます。
 細かい条件として cv の status は1、 ad の type は2のデータを抽出したいです。
