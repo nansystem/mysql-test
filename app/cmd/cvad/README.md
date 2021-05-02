@@ -1,6 +1,8 @@
 # ad, cv
 [[MySQL Workbench] VISUAL EXPLAIN でインデックスの挙動を確認する](https://engineering.linecorp.com/ja/blog/mysql-workbench-index-behavior-with-visual-explain/)
 
+![image](https://user-images.githubusercontent.com/6994710/116802130-81973780-ab4b-11eb-9ab9-b6067030d3f6.png)
+
 ## インデックスなし
 
 ``` sql
