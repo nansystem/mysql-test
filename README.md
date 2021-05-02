@@ -30,21 +30,11 @@ $ docker volume rm [dbのvolume名]
 $ docker-compose up -d
 ```
 
-## gen/xo
-
-``` sh
-$ gen --connstr="root:password@tcp(localhost:3306)/devdb" --out generated --sqltype mysql --database devdb --no-json --overwrite
-```
+## xo
 
 ``` sh
 $ xo "mysql://root:password@localhost:3306/devdb" -o generated --verbose
 error # ファイルはgenerateされるがerrorと表示される
-```
-
-## tbls
-
-``` sh
-$ docker run --rm -v $PWD:/work k1low/tbls doc mysql://root:password@tcp\(localhost\)/devdb
 ```
 
 ## file load

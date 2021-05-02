@@ -14,9 +14,7 @@ import (
 )
 
 func FillCvs(count int64, ads []generated.Ad) ([]generated.Cv, error) {
-	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
-	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
-	cvs := createMockCvs(count, ads, start, end)
+	cvs := createMockCvs(count, ads)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(cvs), 2000) {
@@ -39,7 +37,10 @@ func FillCvs(count int64, ads []generated.Ad) ([]generated.Cv, error) {
 	return cvs, nil
 }
 
-func createMockCvs(count int64, ads []generated.Ad, start, end time.Time) []generated.Cv {
+func createMockCvs(count int64, ads []generated.Ad) []generated.Cv {
+	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
+	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
+
 	cvs := make([]generated.Cv, count)
 	for i := int64(0); i < count; i++ {
 		cvs[i] = newMockCv(

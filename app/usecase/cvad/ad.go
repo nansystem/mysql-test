@@ -12,9 +12,7 @@ import (
 )
 
 func FillAds(count int64) ([]generated.Ad, error) {
-	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
-	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
-	ads := createMockAds(count, start, end)
+	ads := createMockAds(count)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(ads), 2000) {
@@ -38,7 +36,10 @@ func FillAds(count int64) ([]generated.Ad, error) {
 	return ads, nil
 }
 
-func createMockAds(count int64, start, end time.Time) []generated.Ad {
+func createMockAds(count int64) []generated.Ad {
+	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
+	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
+
 	ads := make([]generated.Ad, count)
 	for i := int64(0); i < count; i++ {
 		ads[i] = newMockAd(
