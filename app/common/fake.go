@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -19,6 +20,13 @@ func RandUnixTime(min, max time.Time) int64 {
 
 func RandTime(min, max time.Time) time.Time {
 	return time.Unix(RandUnixTime(min, max), 0)
+}
+
+var telPres = [...]string{"090", "080", "070", "050"}
+
+// WARNING 電話番号が実在する可能性あり
+func RandPhoneNumber() string {
+	return fmt.Sprintf("%s-%04d-%04d", telPres[rand.Intn(len(telPres))], RandNum(0, 9999), RandNum(0, 9999))
 }
 
 type Period struct {

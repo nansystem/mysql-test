@@ -15,5 +15,5 @@ func main() {
 	}
 	defer infra.Close()
 
-	usecase.FillEmployees(1)
+	usecase.FillEmployees(1000000)
 }
