@@ -13,6 +13,7 @@ require (
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/iancoleman/strcase v0.1.3 // indirect
 	github.com/jessevdk/go-flags v1.5.0
+	github.com/mattn/go-gimei v0.0.0-20210108171046-dc6b9016b9ce
 	github.com/satori/go.uuid v1.2.0
 	github.com/serenize/snaker v0.0.0-20201027110005-a7ad2135616e // indirect
 	github.com/sijms/go-ora v0.0.0-20210420114532-930751532d56 // indirect

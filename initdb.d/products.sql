@@ -6,4 +6,5 @@ CREATE TABLE `products` (
   `starts_at` datetime NOT NULL,        -- 商品の掲載開始日時
   `ends_at` datetime NOT NULL,          -- 商品の掲載終了日時
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB
+) ENGINE = InnoDB;
+
