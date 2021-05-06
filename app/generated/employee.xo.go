@@ -8,11 +8,12 @@ import (
 
 // Employee represents a row from 'devdb.employees'.
 type Employee struct {
-	EmployeeID  uint      `json:"employee_id"`   // employee_id
-	FirstName   string    `json:"first_name"`    // first_name
-	LastName    string    `json:"last_name"`     // last_name
-	DateOfBirth time.Time `json:"date_of_birth"` // date_of_birth
-	PhoneNumber string    `json:"phone_number"`  // phone_number
+	EmployeeID   uint      `json:"employee_id"`   // employee_id
+	SubsidiaryID uint      `json:"subsidiary_id"` // subsidiary_id
+	FirstName    string    `json:"first_name"`    // first_name
+	LastName     string    `json:"last_name"`     // last_name
+	DateOfBirth  time.Time `json:"date_of_birth"` // date_of_birth
+	PhoneNumber  string    `json:"phone_number"`  // phone_number
 
 	// xo fields
 	_exists, _deleted bool
@@ -39,14 +40,14 @@ func (e *Employee) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO devdb.employees (` +
-		`employee_id, first_name, last_name, date_of_birth, phone_number` +
+		`employee_id, subsidiary_id, first_name, last_name, date_of_birth, phone_number` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, e.EmployeeID, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber)
-	_, err = db.Exec(sqlstr, e.EmployeeID, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber)
+	XOLog(sqlstr, e.EmployeeID, e.SubsidiaryID, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber)
+	_, err = db.Exec(sqlstr, e.EmployeeID, e.SubsidiaryID, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber)
 	if err != nil {
 		return err
 	}
@@ -71,14 +72,14 @@ func (e *Employee) Update(db XODB) error {
 		return errors.New("update failed: marked for deletion")
 	}
 
-	// sql query
+	// sql query with composite primary key
 	const sqlstr = `UPDATE devdb.employees SET ` +
 		`first_name = ?, last_name = ?, date_of_birth = ?, phone_number = ?` +
-		` WHERE employee_id = ?`
+		` WHERE employee_id = ? AND subsidiary_id = ?`
 
 	// run query
-	XOLog(sqlstr, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber, e.EmployeeID)
-	_, err = db.Exec(sqlstr, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber, e.EmployeeID)
+	XOLog(sqlstr, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber, e.EmployeeID, e.SubsidiaryID)
+	_, err = db.Exec(sqlstr, e.FirstName, e.LastName, e.DateOfBirth, e.PhoneNumber, e.EmployeeID, e.SubsidiaryID)
 	return err
 }
 
@@ -105,12 +106,12 @@ func (e *Employee) Delete(db XODB) error {
 		return nil
 	}
 
-	// sql query
-	const sqlstr = `DELETE FROM devdb.employees WHERE employee_id = ?`
+	// sql query with composite primary key
+	const sqlstr = `DELETE FROM devdb.employees WHERE employee_id = ? AND subsidiary_id = ?`
 
 	// run query
-	XOLog(sqlstr, e.EmployeeID)
-	_, err = db.Exec(sqlstr, e.EmployeeID)
+	XOLog(sqlstr, e.EmployeeID, e.SubsidiaryID)
+	_, err = db.Exec(sqlstr, e.EmployeeID, e.SubsidiaryID)
 	if err != nil {
 		return err
 	}
@@ -121,25 +122,25 @@ func (e *Employee) Delete(db XODB) error {
 	return nil
 }
 
-// EmployeeByEmployeeID retrieves a row from 'devdb.employees' as a Employee.
+// EmployeeBySubsidiaryID retrieves a row from 'devdb.employees' as a Employee.
 //
-// Generated from index 'employees_employee_id_pkey'.
-func EmployeeByEmployeeID(db XODB, employeeID uint) (*Employee, error) {
+// Generated from index 'employees_subsidiary_id_pkey'.
+func EmployeeBySubsidiaryID(db XODB, subsidiaryID uint) (*Employee, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`employee_id, first_name, last_name, date_of_birth, phone_number ` +
+		`employee_id, subsidiary_id, first_name, last_name, date_of_birth, phone_number ` +
 		`FROM devdb.employees ` +
-		`WHERE employee_id = ?`
+		`WHERE subsidiary_id = ?`
 
 	// run query
-	XOLog(sqlstr, employeeID)
+	XOLog(sqlstr, subsidiaryID)
 	e := Employee{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, employeeID).Scan(&e.EmployeeID, &e.FirstName, &e.LastName, &e.DateOfBirth, &e.PhoneNumber)
+	err = db.QueryRow(sqlstr, subsidiaryID).Scan(&e.EmployeeID, &e.SubsidiaryID, &e.FirstName, &e.LastName, &e.DateOfBirth, &e.PhoneNumber)
 	if err != nil {
 		return nil, err
 	}
