@@ -17,10 +17,10 @@ func FillEmployees(count int64) ([]generated.Employee, error) {
 	list := createMockEmployees(count)
 
 	bar := pb.StartNew(int(count))
-	for idx := range common.IndexChunks(len(list), 2000) {
-		q := sq.Insert("employees").Columns("employee_id", "first_name", "last_name", "date_of_birth", "phone_number")
+	for idx := range common.IndexChunks(len(list), 3000) {
+		q := sq.Insert("employees").Columns("employee_id", "subsidiary_id", "first_name", "last_name", "date_of_birth", "phone_number")
 		for _, item := range list[idx.From:idx.To] {
-			q = q.Values(item.EmployeeID, item.FirstName, item.LastName, item.DateOfBirth, item.PhoneNumber)
+			q = q.Values(item.EmployeeID, item.SubsidiaryID, item.FirstName, item.LastName, item.DateOfBirth, item.PhoneNumber)
 		}
 		sql, args, err := q.ToSql()
 		if err != nil {
@@ -48,6 +48,7 @@ func createMockEmployees(count int64) []generated.Employee {
 
 		list[i] = newMockEmployee(
 			uint(i+1),
+			uint(common.RandNum(1, 1000)),
 			name.First.Kanji(),
 			name.Last.Kanji(),
 			d,
@@ -57,12 +58,13 @@ func createMockEmployees(count int64) []generated.Employee {
 	return list
 }
 
-func newMockEmployee(ID uint, firstName, lastName string, dateOfBirth time.Time, phoneNumber string) generated.Employee {
+func newMockEmployee(ID, subsidiaryID uint, firstName, lastName string, dateOfBirth time.Time, phoneNumber string) generated.Employee {
 	return generated.Employee{
-		EmployeeID:  ID,
-		FirstName:   firstName,
-		LastName:    lastName,
-		DateOfBirth: dateOfBirth,
-		PhoneNumber: phoneNumber,
+		EmployeeID:   ID,
+		SubsidiaryID: subsidiaryID,
+		FirstName:    firstName,
+		LastName:     lastName,
+		DateOfBirth:  dateOfBirth,
+		PhoneNumber:  phoneNumber,
 	}
 }
