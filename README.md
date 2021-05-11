@@ -34,7 +34,6 @@ $ docker-compose up -d
 
 ``` sh
 $ xo "mysql://root:password@localhost:3306/devdb" -o generated --verbose
-error # ファイルはgenerateされるがerrorと表示される
 ```
 
 ## file load
