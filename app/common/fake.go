@@ -22,6 +22,16 @@ func RandTime(min, max time.Time) time.Time {
 	return time.Unix(RandUnixTime(min, max), 0)
 }
 
+func RandTimeSeries(base time.Time, addMin, addMax time.Duration) func() time.Time {
+	b := base
+	min := int64(addMin)
+	max := int64(addMax)
+	return func() time.Time {
+		b = b.Add(time.Duration(RandNum(min, max)))
+		return b
+	}
+}
+
 var telPres = [...]string{"090", "080", "070", "050"}
 
 // WARNING 電話番号が実在する可能性あり
@@ -43,7 +53,7 @@ func RandPeriod(baseMin time.Time, baseMax time.Time, addMinDay, addMaxDay int64
 
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func RandomString(min, max int64) string {
+func RandString(min, max int64) string {
 	b := make([]byte, RandNum(min, max))
 
 	for i := range b {
@@ -51,6 +61,26 @@ func RandomString(min, max int64) string {
 	}
 
 	return string(b)
+}
+
+type ValWeight struct {
+	Val    interface{}
+	Weight int
+}
+
+func RandValWeight(vws []ValWeight) interface{} {
+	totalWeight := 0
+	for _, vw := range vws {
+		totalWeight += vw.Weight
+	}
+	rnd := rand.Int() % totalWeight
+	for _, vw := range vws {
+		if rnd < vw.Weight {
+			return vw.Val
+		}
+		rnd -= vw.Weight
+	}
+	return vws[len(vws)-1]
 }
 
 type IndexChunk struct {

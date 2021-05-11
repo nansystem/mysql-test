@@ -46,7 +46,7 @@ func createMockProducts(count int64) []generated.Product {
 		list[i] = newMockProduct(
 			uint(i+1),
 			uint(common.RandNum(1, 1000)),
-			common.RandomString(10, 30),
+			common.RandString(10, 30),
 			uint(common.RandNum(5000, 100000)),
 			p.Start,
 			p.End,
