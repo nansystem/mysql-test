@@ -1,4 +1,4 @@
-package usecase
+package cvad
 
 import (
 	"log"
@@ -12,7 +12,7 @@ import (
 )
 
 func FillAds(count int64) ([]generated.Ad, error) {
-	ads := createMockAds(count)
+	ads := createAds(count)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(ads), 2000) {
@@ -36,16 +36,16 @@ func FillAds(count int64) ([]generated.Ad, error) {
 	return ads, nil
 }
 
-func createMockAds(count int64) []generated.Ad {
+func createAds(count int64) []generated.Ad {
 	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
 	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
 
 	ads := make([]generated.Ad, count)
 	for i := int64(0); i < count; i++ {
-		ads[i] = newMockAd(
+		ads[i] = newAd(
 			int(i+1),
-			common.RandomString(10, 25),
-			common.RandomString(50, 100),
+			common.RandString(10, 25),
+			common.RandString(50, 100),
 			int8(common.RandNum(1, 10)),
 			int8(common.RandNum(1, 10)),
 			int(common.RandUnixTime(start, end)),
@@ -56,7 +56,7 @@ func createMockAds(count int64) []generated.Ad {
 	return ads
 }
 
-func newMockAd(id int, title, desc string, tp int8, status int8, start, end, updated int) generated.Ad {
+func newAd(id int, title, desc string, tp int8, status int8, start, end, updated int) generated.Ad {
 	return generated.Ad{
 		ID:          id,
 		Title:       title,

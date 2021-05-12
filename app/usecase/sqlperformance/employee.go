@@ -1,4 +1,4 @@
-package usecase
+package sqlperformance
 
 import (
 	"log"
@@ -14,7 +14,7 @@ import (
 )
 
 func FillEmployees(count int64) ([]generated.Employee, error) {
-	list := createMockEmployees(count)
+	list := createEmployees(count)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(list), 3000) {
@@ -37,7 +37,7 @@ func FillEmployees(count int64) ([]generated.Employee, error) {
 	return list, nil
 }
 
-func createMockEmployees(count int64) []generated.Employee {
+func createEmployees(count int64) []generated.Employee {
 	minDate := common.CreateDate(1960, 1, 1)
 	maxDate := common.CreateDate(2021, 12, 31)
 
@@ -46,7 +46,7 @@ func createMockEmployees(count int64) []generated.Employee {
 		name := gimei.NewName()
 		d := common.RandTime(minDate, maxDate)
 
-		list[i] = newMockEmployee(
+		list[i] = newEmployee(
 			uint(i+1),
 			uint(common.RandNum(1, 1000)),
 			name.First.Kanji(),
@@ -58,7 +58,7 @@ func createMockEmployees(count int64) []generated.Employee {
 	return list
 }
 
-func newMockEmployee(ID, subsidiaryID uint, firstName, lastName string, dateOfBirth time.Time, phoneNumber string) generated.Employee {
+func newEmployee(ID, subsidiaryID uint, firstName, lastName string, dateOfBirth time.Time, phoneNumber string) generated.Employee {
 	return generated.Employee{
 		EmployeeID:   ID,
 		SubsidiaryID: subsidiaryID,

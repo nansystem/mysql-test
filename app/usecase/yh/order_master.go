@@ -1,4 +1,4 @@
-package usecase
+package yh
 
 import (
 	"log"

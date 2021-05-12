@@ -1,4 +1,4 @@
-package usecase
+package product
 
 import (
 	"log"
@@ -13,7 +13,7 @@ import (
 )
 
 func FillProducts(count int64) ([]generated.Product, error) {
-	list := createMockProducts(count)
+	list := createProducts(count)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(list), 2000) {
@@ -36,14 +36,14 @@ func FillProducts(count int64) ([]generated.Product, error) {
 	return list, nil
 }
 
-func createMockProducts(count int64) []generated.Product {
+func createProducts(count int64) []generated.Product {
 	baseMin := time.Date(2018, 5, 1, 0, 0, 0, 0, common.JP())
 	baseMax := time.Date(2022, 5, 1, 0, 0, 0, 0, common.JP())
 
 	list := make([]generated.Product, count)
 	for i := int64(0); i < count; i++ {
 		p := common.RandPeriod(baseMin, baseMax, 1, 180)
-		list[i] = newMockProduct(
+		list[i] = newProduct(
 			uint(i+1),
 			uint(common.RandNum(1, 1000)),
 			common.RandString(10, 30),
@@ -55,7 +55,7 @@ func createMockProducts(count int64) []generated.Product {
 	return list
 }
 
-func newMockProduct(ID, shopID uint, name string, price uint, start, end time.Time) generated.Product {
+func newProduct(ID, shopID uint, name string, price uint, start, end time.Time) generated.Product {
 	return generated.Product{
 		ID:       ID,
 		ShopID:   shopID,

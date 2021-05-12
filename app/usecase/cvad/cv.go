@@ -1,4 +1,4 @@
-package usecase
+package cvad
 
 import (
 	"log"
@@ -14,7 +14,7 @@ import (
 )
 
 func FillCvs(count int64, ads []generated.Ad) ([]generated.Cv, error) {
-	cvs := createMockCvs(count, ads)
+	cvs := createCvs(count, ads)
 
 	bar := pb.StartNew(int(count))
 	for idx := range common.IndexChunks(len(cvs), 2000) {
@@ -37,13 +37,13 @@ func FillCvs(count int64, ads []generated.Ad) ([]generated.Cv, error) {
 	return cvs, nil
 }
 
-func createMockCvs(count int64, ads []generated.Ad) []generated.Cv {
+func createCvs(count int64, ads []generated.Ad) []generated.Cv {
 	start := time.Date(2021, 3, 23, 0, 0, 0, 0, common.JP())
 	end := time.Date(2021, 4, 23, 0, 0, 0, 0, common.JP())
 
 	cvs := make([]generated.Cv, count)
 	for i := int64(0); i < count; i++ {
-		cvs[i] = newMockCv(
+		cvs[i] = newCv(
 			int(i+1),
 			ads[rand.Intn(len(ads))].ID,
 			int(common.RandNum(1, 100000)),
@@ -54,7 +54,7 @@ func createMockCvs(count int64, ads []generated.Ad) []generated.Cv {
 	return cvs
 }
 
-func newMockCv(ID, adID, userID int, status int8, createdAt int) generated.Cv {
+func newCv(ID, adID, userID int, status int8, createdAt int) generated.Cv {
 	return generated.Cv{
 		ID:        ID,
 		AdID:      adID,
