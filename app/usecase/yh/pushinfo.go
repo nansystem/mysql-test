@@ -37,7 +37,7 @@ func FillPushInfo(count int64) ([]generated.YhPushInfo, error) {
 }
 
 func createPushInfoList(count int64) []generated.YhPushInfo {
-	series := common.RandTimeSeries(time.Now(), 1*time.Minute, 10*time.Minute)
+	series := common.RandTimeSeries(time.Now(), -1*time.Minute, -1*time.Minute)
 	list := make([]generated.YhPushInfo, count)
 	for i := int64(0); i < count; i++ {
 		list[i] = newPushInfo(
