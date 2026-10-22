@@ -2,6 +2,8 @@ module github.com/nansystem/mysql-test
 
 go 1.15
 
+toolchain go1.27.3
+
 require (
 	github.com/Masterminds/squirrel v1.5.0
 	github.com/bxcodec/faker/v3 v3.6.0 // indirect
